@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>بنایار - دستیار مالی و بهای تمام‌شده ساختمان</title>
 
-  <!-- شناسنامه برنامه، لوگو و تنظیمات PWA -->
+  <!-- شناسنامه برنامه، لوگو و PWA -->
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png" href="icon.png">
   <link rel="apple-touch-icon" href="icon.png">
@@ -31,29 +31,32 @@
 <body class="bg-slate-50 text-slate-800 min-h-screen pb-20">
 
   <!-- نوار وضعیت لایسنس بالای صفحه -->
-  <div id="licenseNoticeBar" class="bg-slate-900 text-white text-xs px-4 py-2.5 flex items-center justify-between no-print border-b border-slate-700">
+  <div id="licenseNoticeBar" class="bg-slate-900 text-white text-xs px-4 py-2 flex items-center justify-between no-print border-b border-slate-700">
     <div class="flex items-center gap-2">
       <span class="w-2.5 h-2.5 rounded-full bg-rose-500" id="licenseDot"></span>
       <span id="licenseStatusText" class="font-bold text-xs text-slate-200">وضعیت: در حال بررسی...</span>
     </div>
     <div class="flex items-center gap-2">
-      <span class="text-xs text-slate-400">کد دستگاه شما: <strong id="topMachineId" class="text-amber-300 font-mono text-sm tracking-wider font-bold">-----</strong></span>
+      <span class="text-xs text-slate-400">کد دستگاه: <strong id="topMachineId" class="text-amber-300 font-mono text-sm tracking-wider font-bold">-----</strong></span>
       <button onclick="openLicenseModal()" class="bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs px-2.5 py-1 rounded-lg font-bold transition shadow">
         🔑 فعال‌سازی / تمدید
       </button>
     </div>
   </div>
 
-  <!-- هدر رسمی بنایار -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 px-4 py-3 shadow-sm no-print">
+  <!-- هدر رسمی بنایار به همراه نام و شماره دهقانی‌پور -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 px-4 py-2.5 shadow-sm no-print">
     <div class="max-w-xl mx-auto flex items-center justify-between">
       <div class="flex items-center gap-2">
         <button id="backBtn" onclick="showHub()" class="hidden p-1.5 hover:bg-slate-100 rounded-lg text-slate-600 transition">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         </button>
-        <div class="flex items-center gap-2">
-          <img src="icon.png" onerror="this.style.display='none'" class="w-7 h-7 rounded-lg object-cover shadow-sm">
-          <h1 id="appTitle" class="font-black text-lg text-slate-900">بنایار <span class="text-xs font-normal text-slate-500">(دستیار سازنده)</span></h1>
+        <div class="flex items-center gap-2.5">
+          <img src="icon.png" onerror="this.style.display='none'" class="w-8 h-8 rounded-xl object-cover shadow-sm border border-slate-100">
+          <div>
+            <h1 id="appTitle" class="font-black text-base text-slate-900 leading-tight">بنایار <span class="text-[11px] font-normal text-slate-500">(دستیار سازنده)</span></h1>
+            <div class="text-[10px] text-slate-500 font-medium">پشتیبانی: دهقانی‌پور <span class="font-mono text-emerald-700 font-bold">۰۹۱۶۹۸۸۷۸۴۸</span></div>
+          </div>
         </div>
       </div>
       <div id="headerActions" class="flex items-center gap-2"></div>
@@ -79,7 +82,7 @@
           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
         </div>
         <h3 class="font-bold text-slate-800 text-base mb-1">هیچ پروژه‌ای تعریف نشده است</h3>
-        <p class="text-xs text-slate-500 mb-4">جهت محاسبه بهای تمام‌شده، اولین پروژه کارگاه را بسازید.</p>
+        <p class="text-xs text-slate-500 mb-4">جهت محاسبه بهای تمام‌شده با خواب پول، پروژه را تعریف کنید.</p>
         <button onclick="guardAction(() => openModal('newProjectModal'))" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-medium px-4 py-2.5 rounded-xl transition">
           + تعریف اولین پروژه
         </button>
@@ -95,7 +98,7 @@
         <div id="liquidityAlertText" class="font-medium"></div>
       </div>
 
-      <!-- ۳ شاخص کلیدی مالی -->
+      <!-- ۳ شاخص کلیدی مالی به ریال -->
       <div class="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-4 shadow-sm space-y-4">
         <div class="flex justify-between items-center text-xs text-slate-300 border-b border-slate-700/60 pb-2.5">
           <span id="dashProjectTitle" class="font-bold text-white text-sm">--</span>
@@ -104,7 +107,7 @@
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
               چاپ / گزارش PDF
             </button>
-            <span id="dashProjectRate" class="bg-slate-700/50 px-2 py-1 rounded text-[11px]">تورم: ۰.۲٪ روزانه</span>
+            <span id="dashProjectRate" class="bg-slate-700/50 px-2 py-1 rounded text-[11px] font-mono">تورم: ۱۰۰٪ سالانه</span>
           </div>
         </div>
 
@@ -153,7 +156,7 @@
       <!-- تب شرکا -->
       <div id="tabPartners" class="space-y-3 hidden">
         <div class="flex justify-between items-center text-xs">
-          <span class="text-slate-500">ارزش واقعی سرمایه شرکا (با خواب پول)</span>
+          <span class="text-slate-500">ارزش روز سرمایه شرکا (با خواب پول دادگستری)</span>
           <button onclick="guardAction(() => openPartnerModal(null))" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-3 py-1.5 rounded-lg">
             + ثبت آورده شریک
           </button>
@@ -161,13 +164,18 @@
         <div id="partnersList" class="space-y-2"></div>
       </div>
 
-      <!-- تب واحدها و پیش‌فروش -->
+      <!-- تب واحدها و پیش‌فروش (با قابلیت ثبت گروهی) -->
       <div id="tabUnits" class="hidden space-y-3">
         <div class="flex justify-between items-center text-xs">
-          <span class="text-slate-500">مدیریت واحدها و پیش‌فروش</span>
-          <button onclick="guardAction(() => openModal('unitModal'))" class="bg-slate-800 hover:bg-slate-900 text-white font-medium px-3 py-1.5 rounded-lg">
-            + افزودن واحد
-          </button>
+          <span class="text-slate-500">مدیریت واحدها و قیمت‌گذاری بر اساس کیفیت</span>
+          <div class="flex gap-1.5">
+            <button onclick="guardAction(() => openModal('batchUnitModal'))" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2.5 py-1.5 rounded-lg flex items-center gap-1">
+              ⚡ ثبت سریع گروهی
+            </button>
+            <button onclick="guardAction(() => openUnitModal(null))" class="bg-slate-800 hover:bg-slate-900 text-white font-medium px-2.5 py-1.5 rounded-lg">
+              + افزودن تکی
+            </button>
+          </div>
         </div>
         <div id="unitsList" class="space-y-2"></div>
       </div>
@@ -191,8 +199,9 @@
             </div>
           </div>
           <div>
-            <label class="block text-slate-600 mb-1">درصد روزانه خواب پول (%)</label>
-            <input id="editDailyRate" type="number" step="0.01" class="w-full border rounded-lg p-2">
+            <label class="block text-slate-600 mb-1">نرخ سالانه تورم مصالح و خواب سرمایه (%)</label>
+            <input id="editAnnualRate" type="number" step="1" value="100" class="w-full border rounded-lg p-2 font-bold font-mono">
+            <span class="text-[10px] text-slate-400 mt-0.5 block">مبنای محاسبه: سود ساده روزشمار طبق عرف قضایی بازار ایران (معادل تقریباً ماهی ۸.۳٪)</span>
           </div>
 
           <div class="pt-3 border-t border-slate-100 space-y-2.5">
@@ -248,7 +257,7 @@
       </div>
 
       <div>
-        <h3 class="font-black text-lg text-slate-900" id="licModalHeading">فعال‌سازی نرم‌افزار بنایار</h3>
+        <h3 class="font-black text-lg text-slate-900">فعال‌سازی نرم‌افزار بنایار</h3>
         <p class="text-xs text-slate-500 mt-1">جهت فعال‌سازی یا تمدید، کد دستگاه را اعلام فرمایید:</p>
         <p class="text-[11px] text-emerald-700 font-bold mt-0.5">تماس و پیامک: ۰۹۱۶۹۸۸۷۸۴۸ (مهندس دهقانی‌پور)</p>
       </div>
@@ -277,84 +286,7 @@
     </div>
   </div>
 
-  <!-- پیش‌نمایش گزارش و پرینت PDF -->
-  <div id="reportModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 overflow-y-auto p-4 flex items-center justify-center">
-    <div id="reportPaper" class="bg-white rounded-2xl w-full max-w-2xl p-6 shadow-2xl space-y-4 my-auto">
-      <div id="reportModalHeader" class="flex justify-between items-center border-b pb-3 no-print">
-        <span class="font-bold text-slate-800 text-sm">📄 پیش‌نمایش گزارش رسمی پروژه</span>
-        <button onclick="closeModal('reportModal')" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
-      </div>
-
-      <div class="border-b-2 border-slate-800 pb-3 flex justify-between items-end">
-        <div>
-          <h2 class="text-lg font-black text-slate-900" id="repProjTitle">گزارش مالی ساختمان</h2>
-          <div class="text-[11px] text-slate-600 mt-0.5" id="repDate">تاریخ صدور: --</div>
-        </div>
-        <div class="text-left text-[11px]">
-          <div class="font-bold text-emerald-700">بنایار (دستیار هوشمند بهای تمام‌شده)</div>
-          <div class="text-slate-500">واحد مبالغ: ریال ایران</div>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-3 gap-2 bg-slate-50 p-3 rounded-xl text-xs border border-slate-200">
-        <div>مخارج اسمی: <div id="repNominal" class="font-bold text-slate-800 text-xs mt-1">--</div></div>
-        <div>مخارج با خواب پول: <div id="repReal" class="font-bold text-emerald-700 text-xs mt-1">--</div></div>
-        <div>بهای هر متر زیربنا: <div id="repPerMeter" class="font-bold text-slate-800 text-xs mt-1">--</div></div>
-      </div>
-
-      <div>
-        <h4 class="font-bold text-xs mb-1.5 text-slate-800 border-r-2 border-emerald-600 pr-2">۱. ارزش روز آورده شرکا (با خواب پول)</h4>
-        <table class="w-full text-[11px] text-right border-collapse border border-slate-200">
-          <thead>
-            <tr class="bg-slate-100 text-slate-700">
-              <th class="p-1.5 border border-slate-200">نام شریک</th>
-              <th class="p-1.5 border border-slate-200">تاریخ واریز</th>
-              <th class="p-1.5 border border-slate-200">مبلغ اسمی (ریال)</th>
-              <th class="p-1.5 border border-slate-200">ارزش روز با خواب سرمایه</th>
-            </tr>
-          </thead>
-          <tbody id="repPartnersBody"></tbody>
-        </table>
-      </div>
-
-      <div>
-        <h4 class="font-bold text-xs mb-1.5 text-slate-800 border-r-2 border-emerald-600 pr-2">۲. وضعیت واحدها، بهای تمام‌شده و فروش</h4>
-        <table class="w-full text-[11px] text-right border-collapse border border-slate-200">
-          <thead>
-            <tr class="bg-slate-100 text-slate-700">
-              <th class="p-1.5 border border-slate-200">واحد</th>
-              <th class="p-1.5 border border-slate-200">متراژ</th>
-              <th class="p-1.5 border border-slate-200">ضریب</th>
-              <th class="p-1.5 border border-slate-200">بهای تمام‌شده</th>
-              <th class="p-1.5 border border-slate-200">وضعیت / فی فروش</th>
-            </tr>
-          </thead>
-          <tbody id="repUnitsBody"></tbody>
-        </table>
-      </div>
-
-      <div class="grid grid-cols-2 gap-4 pt-6 border-t border-dashed border-slate-300 text-[11px] text-slate-600">
-        <div class="text-center h-16 flex flex-col justify-between">
-          <div>امضاء و تأیید سازنده / مدیر پروژه</div>
-          <div class="text-slate-300">............................................</div>
-        </div>
-        <div class="text-center h-16 flex flex-col justify-between">
-          <div>امضاء و تأیید شرکا و سرمایه‌گذاران</div>
-          <div class="text-slate-300">............................................</div>
-        </div>
-      </div>
-
-      <div id="reportModalFooter" class="flex gap-2 pt-3 border-t no-print">
-        <button onclick="window.print()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-          چاپ / ذخیره به عنوان PDF
-        </button>
-        <button onclick="closeModal('reportModal')" class="px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl text-xs font-semibold">بستن</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- مودال‌ها: پروژه، هزینه، شریک، واحد، پیش‌فروش -->
+  <!-- مودال: تعریف پروژه جدید با آورده اولیه سازنده -->
   <div id="newProjectModal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 no-print">
     <div class="bg-white rounded-2xl w-full max-w-sm p-4 space-y-3 shadow-xl">
       <div class="flex justify-between items-center border-b pb-2">
@@ -376,9 +308,17 @@
             <input id="newProjGrossArea" type="number" placeholder="اختیاری" class="w-full border rounded-lg p-2">
           </div>
         </div>
+
         <div>
-          <label class="block text-slate-600 mb-1">نرخ روزانه خواب سرمایه (%)</label>
-          <input id="newProjDailyRate" type="number" step="0.01" value="0.2" class="w-full border rounded-lg p-2">
+          <label class="block text-slate-600 mb-1">نرخ سالانه تورم مصالح و خواب پول (%)</label>
+          <input id="newProjAnnualRate" type="number" step="1" value="100" class="w-full border rounded-lg p-2 font-bold font-mono">
+          <span class="text-[10px] text-slate-400 mt-0.5 block">پیش‌فرض: ۱۰۰٪ در سال (بر مبنای سود ساده دادگستری)</span>
+        </div>
+
+        <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-200">
+          <label class="block text-amber-900 font-semibold mb-1">آورده نقدی اولیه سازنده (ریال) - اختیاری</label>
+          <input id="newProjInitialCapital" type="text" inputmode="numeric" oninput="formatCurrencyInput(this)" placeholder="مثلاً ۲۰۰,۰۰۰,۰۰۰,۰۰۰" class="w-full border border-amber-300 rounded-lg p-1.5 font-bold font-mono text-left bg-white text-xs">
+          <span class="text-[10px] text-amber-800 mt-1 block">جهت تراز بودن صندوق و عدم نمایش هشدار کسری نقدینگی</span>
         </div>
       </div>
       <div class="flex gap-2 pt-2">
@@ -388,6 +328,81 @@
     </div>
   </div>
 
+  <!-- مودال جادویی: ثبت گروهی واحدها -->
+  <div id="batchUnitModal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 no-print">
+    <div class="bg-white rounded-2xl w-full max-w-sm p-4 space-y-3 shadow-xl">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h3 class="font-bold text-sm text-slate-800">⚡ ثبت سریع و گروهی واحدها</h3>
+        <button onclick="closeModal('batchUnitModal')" class="text-slate-400 hover:text-slate-600 text-lg">&times;</button>
+      </div>
+      <div class="space-y-2.5 text-xs">
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-slate-600 mb-1">تعداد کل واحدها <span class="text-rose-500">*</span></label>
+            <input id="batchUnitCount" type="number" min="1" max="100" value="8" class="w-full border rounded-lg p-2 font-bold text-center">
+          </div>
+          <div>
+            <label class="block text-slate-600 mb-1">متراژ تیپ هر واحد <span class="text-rose-500">*</span></label>
+            <input id="batchUnitArea" type="number" placeholder="مثلاً: 75" class="w-full border rounded-lg p-2 font-bold text-center">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-600 mb-1">پیشوند نام واحد</label>
+          <input id="batchUnitPrefix" type="text" value="واحد" class="w-full border rounded-lg p-2 text-center">
+          <span class="text-[10px] text-slate-400 mt-0.5 block text-center">خروجی: واحد ۱، واحد ۲، واحد ۳ و...</span>
+        </div>
+
+        <div>
+          <label class="block text-slate-600 mb-1">کیفیت پیش‌فرض واحدها</label>
+          <select id="batchUnitTier" class="w-full border rounded-lg p-2 bg-white">
+            <option value="1.0">⚪ استاندارد و معمولی (قیمت پایه)</option>
+            <option value="1.15">🟢 عالی و رو به نما (+۱۵٪ نسبت به پایه)</option>
+            <option value="0.9">🔴 ضعیف‌تر و حیاط‌خلوت (-۱۰٪ نسبت به پایه)</option>
+          </select>
+        </div>
+        <p class="text-[10px] text-slate-500 bg-slate-50 p-2 rounded-lg">💡 پس از ایجاد گروهی، متراژ هر واحد را می‌توانید متناسب با افرازنامه به صورت جداگانه ویرایش کنید.</p>
+      </div>
+      <div class="flex gap-2 pt-2">
+        <button onclick="generateBatchUnits()" class="flex-1 bg-emerald-600 text-white py-2 rounded-lg text-xs font-semibold">تولید خودکار واحدها 🚀</button>
+        <button onclick="closeModal('batchUnitModal')" class="px-3 bg-slate-100 text-slate-600 py-2 rounded-lg text-xs">انصراف</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- مودال: افزودن یا ویرایش تکی واحد -->
+  <div id="unitModal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 no-print">
+    <div class="bg-white rounded-2xl w-full max-w-sm p-4 space-y-3 shadow-xl max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-center border-b pb-2">
+        <h3 id="unitModalTitle" class="font-bold text-sm text-slate-800">مشخصات واحد</h3>
+        <button onclick="closeModal('unitModal')" class="text-slate-400 hover:text-slate-600 text-lg">&times;</button>
+      </div>
+      <div class="space-y-2.5 text-xs">
+        <div>
+          <label class="block text-slate-600 mb-1">شماره یا نام واحد <span class="text-rose-500">*</span></label>
+          <input id="unitNumber" type="text" placeholder="مثلاً: واحد ۴" class="w-full border rounded-lg p-2">
+        </div>
+        <div>
+          <label class="block text-slate-600 mb-1">متراژ مفید طبق افرازنامه یا پایان‌کار (متر مربع)</label>
+          <input id="unitNetArea" type="number" placeholder="مثلاً: 72.5" class="w-full border rounded-lg p-2 font-bold font-mono">
+        </div>
+        <div>
+          <label class="block text-slate-600 mb-1">موقعیت و کیفیت واحد</label>
+          <select id="unitQualityTier" class="w-full border rounded-lg p-2 bg-white font-medium">
+            <option value="1.15">🟢 عالی / رو به نما و طبقات بالا (+۱۵٪ سهم ارزش)</option>
+            <option value="1.0" selected>⚪ استاندارد و متوسط (قیمت پایه ۱.۰)</option>
+            <option value="0.9">🔴 ضعیف‌تر / حیاط‌خلوت و همکف (-۱۰٪ سهم ارزش)</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex gap-2 pt-2">
+        <button id="saveUnitBtn" onclick="saveUnit()" class="flex-1 bg-emerald-600 text-white py-2 rounded-lg text-xs font-semibold">ذخیره واحد</button>
+        <button onclick="closeModal('unitModal')" class="px-3 bg-slate-100 text-slate-600 py-2 rounded-lg text-xs">انصراف</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- مودال: ثبت فاکتور -->
   <div id="expenseModal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 no-print">
     <div class="bg-white rounded-2xl w-full max-w-sm p-4 space-y-3 shadow-xl max-h-[92vh] overflow-y-auto">
       <div class="flex justify-between items-center border-b pb-2">
@@ -468,6 +483,7 @@
     </div>
   </div>
 
+  <!-- مودال: ثبت / ویرایش آورده شریک -->
   <div id="partnerModal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 no-print">
     <div class="bg-white rounded-2xl w-full max-w-sm p-4 space-y-3 shadow-xl">
       <div class="flex justify-between items-center border-b pb-2">
@@ -476,7 +492,7 @@
       </div>
       <div class="space-y-2.5 text-xs">
         <div>
-          <label class="block text-slate-600 mb-1">نام شریک</label>
+          <label class="block text-slate-600 mb-1">نام شریک / سرمایه‌گذار</label>
           <input id="partnerName" type="text" placeholder="مثلاً: مهندس حسینی" class="w-full border rounded-lg p-2">
         </div>
         <div>
@@ -498,35 +514,7 @@
     </div>
   </div>
 
-  <div id="unitModal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 no-print">
-    <div class="bg-white rounded-2xl w-full max-w-sm p-4 space-y-3 shadow-xl max-h-[90vh] overflow-y-auto">
-      <div class="flex justify-between items-center border-b pb-2">
-        <h3 class="font-bold text-sm text-slate-800">مشخصات واحد</h3>
-        <button onclick="closeModal('unitModal')" class="text-slate-400 hover:text-slate-600 text-lg">&times;</button>
-      </div>
-      <div class="space-y-2.5 text-xs">
-        <div>
-          <label class="block text-slate-600 mb-1">شماره یا نام واحد <span class="text-rose-500">*</span></label>
-          <input id="unitNumber" type="text" placeholder="مثلاً: واحد ۴" class="w-full border rounded-lg p-2">
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-          <div>
-            <label class="block text-slate-600 mb-1">متراژ مفید (متر مربع)</label>
-            <input id="unitNetArea" type="number" placeholder="طبق پایان‌کار" class="w-full border rounded-lg p-2">
-          </div>
-          <div>
-            <label class="block text-slate-600 mb-1">ضریب مرغوبیت</label>
-            <input id="unitFactor" type="number" step="0.05" value="1.0" class="w-full border rounded-lg p-2 font-bold text-emerald-700">
-          </div>
-        </div>
-      </div>
-      <div class="flex gap-2 pt-2">
-        <button onclick="saveUnit()" class="flex-1 bg-emerald-600 text-white py-2 rounded-lg text-xs font-semibold">ذخیره واحد</button>
-        <button onclick="closeModal('unitModal')" class="px-3 bg-slate-100 text-slate-600 py-2 rounded-lg text-xs">انصراف</button>
-      </div>
-    </div>
-  </div>
-
+  <!-- مودال: ثبت پیش‌فروش واحد -->
   <div id="presaleModal" class="hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 no-print">
     <div class="bg-white rounded-2xl w-full max-w-sm p-4 space-y-3 shadow-xl">
       <div class="flex justify-between items-center border-b pb-2">
@@ -561,6 +549,84 @@
     </div>
   </div>
 
+  <!-- پیش‌نمایش گزارش و پرینت PDF -->
+  <div id="reportModal" class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 overflow-y-auto p-4 flex items-center justify-center">
+    <div id="reportPaper" class="bg-white rounded-2xl w-full max-w-2xl p-6 shadow-2xl space-y-4 my-auto">
+      <div id="reportModalHeader" class="flex justify-between items-center border-b pb-3 no-print">
+        <span class="font-bold text-slate-800 text-sm">📄 پیش‌نمایش گزارش رسمی پروژه</span>
+        <button onclick="closeModal('reportModal')" class="text-slate-400 hover:text-slate-600 text-xl font-bold">&times;</button>
+      </div>
+
+      <div class="border-b-2 border-slate-800 pb-3 flex justify-between items-end">
+        <div>
+          <h2 class="text-lg font-black text-slate-900" id="repProjTitle">گزارش مالی ساختمان</h2>
+          <div class="text-[11px] text-slate-600 mt-0.5" id="repDate">تاریخ صدور: --</div>
+        </div>
+        <div class="text-left text-[11px]">
+          <div class="font-bold text-emerald-700">بنایار (دستیار هوشمند بهای تمام‌شده)</div>
+          <div class="text-slate-500">واحد مبالغ: ریال ایران</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-2 bg-slate-50 p-3 rounded-xl text-xs border border-slate-200">
+        <div>مخارج اسمی: <div id="repNominal" class="font-bold text-slate-800 text-xs mt-1">--</div></div>
+        <div>مخارج با خواب پول: <div id="repReal" class="font-bold text-emerald-700 text-xs mt-1">--</div></div>
+        <div>بهای هر متر زیربنا: <div id="repPerMeter" class="font-bold text-slate-800 text-xs mt-1">--</div></div>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-xs mb-1.5 text-slate-800 border-r-2 border-emerald-600 pr-2">۱. ارزش روز آورده شرکا (با خواب سرمایه قانونی)</h4>
+        <table class="w-full text-[11px] text-right border-collapse border border-slate-200">
+          <thead>
+            <tr class="bg-slate-100 text-slate-700">
+              <th class="p-1.5 border border-slate-200">نام شریک</th>
+              <th class="p-1.5 border border-slate-200">تاریخ واریز</th>
+              <th class="p-1.5 border border-slate-200">مبلغ اسمی (ریال)</th>
+              <th class="p-1.5 border border-slate-200">ارزش روز با خواب پول</th>
+            </tr>
+          </thead>
+          <tbody id="repPartnersBody"></tbody>
+        </table>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-xs mb-1.5 text-slate-800 border-r-2 border-emerald-600 pr-2">۲. وضعیت واحدها، بهای تمام‌شده تفکیکی و فروش</h4>
+        <table class="w-full text-[11px] text-right border-collapse border border-slate-200">
+          <thead>
+            <tr class="bg-slate-100 text-slate-700">
+              <th class="p-1.5 border border-slate-200">واحد</th>
+              <th class="p-1.5 border border-slate-200">متراژ</th>
+              <th class="p-1.5 border border-slate-200">موقعیت کیفی</th>
+              <th class="p-1.5 border border-slate-200">بهای تمام‌شده</th>
+              <th class="p-1.5 border border-slate-200">وضعیت / فی فروش</th>
+            </tr>
+          </thead>
+          <tbody id="repUnitsBody"></tbody>
+        </table>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 pt-6 border-t border-dashed border-slate-300 text-[11px] text-slate-600">
+        <div class="text-center h-16 flex flex-col justify-between">
+          <div>امضاء و تأیید سازنده / مدیر پروژه</div>
+          <div class="text-slate-300">............................................</div>
+        </div>
+        <div class="text-center h-16 flex flex-col justify-between">
+          <div>امضاء و تأیید شرکا و سرمایه‌گذاران</div>
+          <div class="text-slate-300">............................................</div>
+        </div>
+      </div>
+
+      <div id="reportModalFooter" class="flex gap-2 pt-3 border-t no-print">
+        <button onclick="window.print()" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
+          چاپ / ذخیره به عنوان PDF
+        </button>
+        <button onclick="closeModal('reportModal')" class="px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 rounded-xl text-xs font-semibold">بستن</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- تقویم شمسی پاپ‌آپ -->
   <div id="shamsiCalendarModal" style="z-index: 99999 !important;" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
     <div class="bg-white rounded-2xl w-full max-w-[320px] p-4 shadow-2xl space-y-3">
       <div class="flex justify-between items-center border-b pb-2">
@@ -617,6 +683,7 @@
     let currentProjectId = null;
     let editingExpenseId = null;
     let editingPartnerId = null;
+    let editingUnitId = null;
     let activePresaleUnitId = null;
     let activeCalendarTargetInputId = null;
     let currentUploadedPhotoBase64 = null;
@@ -999,12 +1066,13 @@
       });
     }
 
+    // --- موتور مالی استاندارد دادگستری (سود ساده سالانه بر مبنای ۳۶۵ روز) ---
     function calculateProjectTotals(p) {
       let nominalCost = 0;
       let realCost = 0;
       let pendingChequesAmount = 0;
       const today = new Date();
-      const dailyRate = (p.dailyRate || 0.2) / 100;
+      const annualRate = Number(p.annualRate || 100) / 100;
 
       (p.expenses || []).forEach(exp => {
         nominalCost += Number(exp.amount);
@@ -1015,7 +1083,9 @@
           daysPassed = 0;
           pendingChequesAmount += Number(exp.amount);
         }
-        realCost += Number(exp.amount) * Math.pow(1 + dailyRate, daysPassed);
+        // فرمول سود ساده دادگستری: اصل × (۱ + نرخ_سالانه × روزها / ۳۶۵)
+        const inflationMultiplier = 1 + (annualRate * (daysPassed / 365));
+        realCost += Number(exp.amount) * inflationMultiplier;
       });
 
       let partnerNominalTotal = 0;
@@ -1025,7 +1095,8 @@
         const effDate = jalaliToGregorian(part.date);
         let daysPassed = Math.floor((today - effDate) / (1000 * 60 * 60 * 24));
         if (daysPassed < 0) daysPassed = 0;
-        const adjusted = Number(part.amount) * Math.pow(1 + dailyRate, daysPassed);
+        const inflationMultiplier = 1 + (annualRate * (daysPassed / 365));
+        const adjusted = Number(part.amount) * inflationMultiplier;
         part.adjustedValue = adjusted;
         partnerRealTotal += adjusted;
       });
@@ -1047,7 +1118,7 @@
 
       const stats = calculateProjectTotals(p);
       document.getElementById('dashProjectTitle').innerText = p.title;
-      document.getElementById('dashProjectRate').innerText = `تورم روزشمار: ${p.dailyRate || 0.2}٪`;
+      document.getElementById('dashProjectRate').innerText = `تورم سالانه: ${p.annualRate || 100}٪ (روزشمار)`;
       document.getElementById('dashRealTotal').innerHTML = `${formatRials(stats.realCost)} <span class="text-xs font-normal">ریال</span>`;
       document.getElementById('dashNominalTotal').innerText = `جمع اسمی: ${formatRials(stats.nominalCost)} ریال`;
 
@@ -1059,14 +1130,14 @@
         document.getElementById('dashAreaNote').innerText = 'زیربنا ثبت نشده';
       }
 
-      document.getElementById('dashInflows').innerText = `ورودی (شرکا + پیش‌فروش): ${formatRials(stats.totalInflow)} ریال`;
+      document.getElementById('dashInflows').innerText = `ورودی (آورده + پیش‌فروش): ${formatRials(stats.totalInflow)} ریال`;
       const pendingCheques = (p.expenses || []).filter(e => e.type === 'cheque' && jalaliToGregorian(e.chequeDate) > new Date());
       document.getElementById('dashUpcomingChecks').innerText = pendingCheques.length > 0 ? `${pendingCheques.length} چک سررسید نشده` : 'چک پیش‌رو: ندارد';
 
       const netCash = stats.totalInflow - stats.nominalCost;
       if (netCash < stats.pendingChequesAmount) {
         document.getElementById('liquidityAlert').classList.remove('hidden');
-        document.getElementById('liquidityAlertText').innerText = `هشدار نقدینگی: پروژه ${formatRials(stats.pendingChequesAmount - netCash)} ریال کسری دارد.`;
+        document.getElementById('liquidityAlertText').innerText = `هشدار نقدینگی: پروژه ${formatRials(stats.pendingChequesAmount - netCash)} ریال کسری دارد. (آورده اولیه یا قسط پیش‌فروش ثبت فرمایید)`;
       } else {
         document.getElementById('liquidityAlert').classList.add('hidden');
       }
@@ -1106,7 +1177,7 @@
       const list = document.getElementById('partnersList');
       list.innerHTML = '';
       if (!p.partners || p.partners.length === 0) {
-        list.innerHTML = `<div class="text-center py-8 text-xs text-slate-400 bg-white rounded-xl border border-slate-100">هنوز آورده شریکی ثبت نشده است.</div>`;
+        list.innerHTML = `<div class="text-center py-8 text-xs text-slate-400 bg-white rounded-xl border border-slate-100">هنوز آورده‌ای برای شرکا یا مالک ثبت نشده است.</div>`;
         return;
       }
       calculateProjectTotals(p);
@@ -1144,7 +1215,7 @@
           document.getElementById('partnerDate').value = normalizeDateString(part.date);
         }
       } else {
-        document.getElementById('partnerModalTitle').innerText = 'ثبت آورده شریک';
+        document.getElementById('partnerModalTitle').innerText = 'ثبت آورده شریک یا مالک';
         document.getElementById('partnerSaveBtn').innerText = 'ثبت آورده';
         document.getElementById('partnerName').value = '';
         document.getElementById('partnerAmount').value = '';
@@ -1191,12 +1262,13 @@
       renderDashboard();
     }
 
+    // --- مدیریت پیشرفته واحدها با موقعیت ۳ حالته و ثبت گروهی ---
     function renderUnitsTab() {
       const p = getCurrentProject();
       const list = document.getElementById('unitsList');
       list.innerHTML = '';
       if (!p.units || p.units.length === 0) {
-        list.innerHTML = `<div class="text-center py-8 text-xs text-slate-400 bg-white rounded-xl border border-slate-100">هنوز واحدی تعریف نشده است.</div>`;
+        list.innerHTML = `<div class="text-center py-8 text-xs text-slate-400 bg-white rounded-xl border border-slate-100">هنوز واحدی تعریف نشده است. می‌توانید با دکمه بالا در ۱ ثانیه همه را گروهی بسازید.</div>`;
         return;
       }
 
@@ -1211,12 +1283,23 @@
         const suggestedSale = unitCost * 1.25;
         const isPresold = u.status === 'presold';
 
+        let tierBadge = '<span class="bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded text-[10px]">⚪ استاندارد</span>';
+        if (u.factor > 1.0) tierBadge = '<span class="bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded text-[10px] font-bold">🟢 عالی (+۱۵٪)</span>';
+        if (u.factor < 1.0) tierBadge = '<span class="bg-rose-50 text-rose-700 px-1.5 py-0.5 rounded text-[10px]">🔴 ضعیف‌تر (-۱۰٪)</span>';
+
         const item = document.createElement('div');
         item.className = "bg-white p-3.5 rounded-xl border border-slate-200 text-xs space-y-2";
         item.innerHTML = `
           <div class="flex justify-between items-center">
-            <span class="font-bold text-slate-900">${u.number} (${u.netArea || 0} متر - ضریب ${u.factor})</span>
-            ${isPresold ? `<span class="bg-purple-50 text-purple-700 font-bold px-2 py-0.5 rounded">پیش‌فروش به: ${u.buyerName}</span>` : `<span class="bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded">آزاد برای فروش</span>`}
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-slate-900">${u.number} (${u.netArea || 0} متر)</span>
+              ${tierBadge}
+            </div>
+            <div class="flex items-center gap-1.5">
+              ${isPresold ? `<span class="bg-purple-50 text-purple-700 font-bold px-2 py-0.5 rounded">پیش‌فروش به: ${u.buyerName}</span>` : `<span class="bg-emerald-50 text-emerald-700 font-bold px-2 py-0.5 rounded">آزاد برای فروش</span>`}
+              <button onclick="guardAction(() => openUnitModal('${u.id}'))" class="p-1 text-slate-400 hover:text-blue-600" title="ویرایش متراژ یا مشخصات">✏️</button>
+              <button onclick="guardAction(() => deleteUnit('${u.id}'))" class="p-1 text-slate-400 hover:text-rose-600" title="حذف واحد">🗑️</button>
+            </div>
           </div>
           <div class="flex justify-between items-center text-[11px] pt-1 border-t border-slate-100 text-slate-600">
             <span>بهای تمام‌شده: <strong class="text-slate-800">${formatRials(unitCost)}</strong> ریال</span>
@@ -1228,6 +1311,98 @@
         `;
         list.appendChild(item);
       });
+    }
+
+    function generateBatchUnits() {
+      const count = parseInt(document.getElementById('batchUnitCount').value);
+      const area = parseFloat(document.getElementById('batchUnitArea').value);
+      const prefix = document.getElementById('batchUnitPrefix').value.trim() || 'واحد';
+      const tierFactor = parseFloat(document.getElementById('batchUnitTier').value) || 1.0;
+
+      if (!count || count <= 0) return alert('تعداد واحدها را وارد کنید');
+      if (!area || area <= 0) return alert('متراژ تیپ را وارد کنید');
+
+      const p = getCurrentProject();
+      p.units = p.units || [];
+
+      for (let i = 1; i <= count; i++) {
+        p.units.push({
+          id: 'u_' + Date.now() + '_' + i,
+          number: `${prefix} ${i}`,
+          netArea: area,
+          factor: tierFactor,
+          status: 'available',
+          payments: []
+        });
+      }
+
+      saveState();
+      closeModal('batchUnitModal');
+      renderDashboard();
+      alert(`تعداد ${count} واحد با موفقیت ساخته شد. متراژ هر کدام را می‌توانید با کلید ✏️ ویرایش کنید.`);
+    }
+
+    function openUnitModal(id = null) {
+      editingUnitId = id;
+      if (id) {
+        const p = getCurrentProject();
+        const u = p.units.find(x => x.id === id);
+        if (u) {
+          document.getElementById('unitModalTitle').innerText = 'ویرایش مشخصات واحد';
+          document.getElementById('saveUnitBtn').innerText = 'ذخیره تغییرات';
+          document.getElementById('unitNumber').value = u.number;
+          document.getElementById('unitNetArea').value = u.netArea;
+          document.getElementById('unitQualityTier').value = String(u.factor || 1.0);
+        }
+      } else {
+        document.getElementById('unitModalTitle').innerText = 'افزودن تکی واحد';
+        document.getElementById('saveUnitBtn').innerText = 'ذخیره واحد';
+        document.getElementById('unitNumber').value = '';
+        document.getElementById('unitNetArea').value = '';
+        document.getElementById('unitQualityTier').value = '1.0';
+      }
+      openModal('unitModal');
+    }
+
+    function deleteUnit(id) {
+      if (!confirm('آیا از حذف این واحد مطمئن هستید؟')) return;
+      const p = getCurrentProject();
+      p.units = p.units.filter(u => u.id !== id);
+      saveState();
+      renderDashboard();
+    }
+
+    function saveUnit() {
+      const number = document.getElementById('unitNumber').value.trim();
+      const netArea = document.getElementById('unitNetArea').value;
+      const factor = parseFloat(document.getElementById('unitQualityTier').value) || 1.0;
+      if (!number) return alert('شماره یا نام واحد را بنویسید');
+
+      const p = getCurrentProject();
+      p.units = p.units || [];
+
+      if (editingUnitId) {
+        const index = p.units.findIndex(u => u.id === editingUnitId);
+        if (index !== -1) {
+          p.units[index].number = number;
+          p.units[index].netArea = Number(netArea) || 0;
+          p.units[index].factor = factor;
+        }
+        editingUnitId = null;
+      } else {
+        p.units.push({
+          id: 'u_' + Date.now(),
+          number,
+          netArea: Number(netArea) || 0,
+          factor: factor,
+          status: 'available',
+          payments: []
+        });
+      }
+
+      saveState();
+      closeModal('unitModal');
+      renderDashboard();
     }
 
     function openPresaleModal(unitId) {
@@ -1293,14 +1468,18 @@
         const dedicatedCosts = (p.expenses || []).filter(e => e.targetUnit === u.number).reduce((sum, e) => sum + Number(e.amount), 0);
         const unitCost = sharedPortion + dedicatedCosts;
 
+        let posLabel = "استاندارد";
+        if (u.factor > 1.0) posLabel = "عالی (+۱۵٪)";
+        if (u.factor < 1.0) posLabel = "ضعیف‌تر (-۱۰٪)";
+
         uBody.innerHTML += `
           <tr>
             <td class="p-1.5 border border-slate-200 font-bold">${u.number}</td>
             <td class="p-1.5 border border-slate-200 text-center">${u.netArea || 0} متر</td>
-            <td class="p-1.5 border border-slate-200 text-center">${u.factor || 1.0}</td>
+            <td class="p-1.5 border border-slate-200 text-center">${posLabel}</td>
             <td class="p-1.5 border border-slate-200 text-left font-mono font-bold text-emerald-800">${formatRials(unitCost)}</td>
             <td class="p-1.5 border border-slate-200 text-left font-mono font-bold">
-              ${u.status === 'presold' ? 'پیش‌فروش شده: ' + formatRials(u.presalePrice) : formatRials(unitCost * 1.25)}
+              ${u.status === 'presold' ? 'پیش‌فروش: ' + formatRials(u.presalePrice) : formatRials(unitCost * 1.25)}
             </td>
           </tr>
         `;
@@ -1494,40 +1673,19 @@
       renderDashboard();
     }
 
-    function saveUnit() {
-      const number = document.getElementById('unitNumber').value.trim();
-      const netArea = document.getElementById('unitNetArea').value;
-      const factor = document.getElementById('unitFactor').value || 1.0;
-      if (!number) return alert('شماره یا نام واحد را بنویسید');
-
-      const p = getCurrentProject();
-      p.units = p.units || [];
-      p.units.push({
-        id: 'u_' + Date.now(),
-        number,
-        netArea: Number(netArea) || 0,
-        factor: Number(factor) || 1.0,
-        status: 'available',
-        payments: []
-      });
-
-      saveState();
-      closeModal('unitModal');
-      document.getElementById('unitNumber').value = '';
-      document.getElementById('unitNetArea').value = '';
-      renderDashboard();
-    }
-
     function createProject() {
       const title = document.getElementById('newProjTitle').value.trim();
       if (!title) return alert('لطفاً عنوان پروژه را بنویسید');
+
+      const annualRate = Number(document.getElementById('newProjAnnualRate').value) || 100;
+      const initialCapital = getRawAmount(document.getElementById('newProjInitialCapital'));
 
       const newProj = {
         id: 'proj_' + Date.now(),
         title: title,
         landArea: document.getElementById('newProjLandArea').value || null,
         grossArea: document.getElementById('newProjGrossArea').value || null,
-        dailyRate: Number(document.getElementById('newProjDailyRate').value) || 0.2,
+        annualRate: annualRate,
         expenses: [],
         partners: [],
         units: [],
@@ -1536,10 +1694,21 @@
         dailyPenalty: 0
       };
 
+      // اگر سازنده در بدو ورود سرمایه اولیه خود را وارد کند، خودکار به عنوان آورده ثبت می‌شود
+      if (initialCapital > 0) {
+        newProj.partners.push({
+          id: 'part_init_' + Date.now(),
+          name: 'سرمایه و آورده اولیه سازنده',
+          amount: initialCapital,
+          date: getTodayJalali()
+        });
+      }
+
       projects.push(newProj);
       saveState();
       closeModal('newProjectModal');
       document.getElementById('newProjTitle').value = '';
+      document.getElementById('newProjInitialCapital').value = '';
       openProject(newProj.id);
     }
 
@@ -1566,7 +1735,7 @@
         document.getElementById('editTitle').value = p.title;
         document.getElementById('editLandArea').value = p.landArea || '';
         document.getElementById('editGrossArea').value = p.grossArea || '';
-        document.getElementById('editDailyRate').value = p.dailyRate || 0.2;
+        document.getElementById('editAnnualRate').value = p.annualRate || 100;
         document.getElementById('editHasDeadline').checked = !!p.hasDeadline;
         document.getElementById('editDeadlineDate').value = normalizeDateString(p.deadlineDate);
         document.getElementById('editDailyPenalty').value = p.dailyPenalty ? Number(p.dailyPenalty).toLocaleString('en-US') : '';
@@ -1584,13 +1753,13 @@
       p.title = document.getElementById('editTitle').value;
       p.landArea = document.getElementById('editLandArea').value;
       p.grossArea = document.getElementById('editGrossArea').value;
-      p.dailyRate = Number(document.getElementById('editDailyRate').value);
+      p.annualRate = Number(document.getElementById('editAnnualRate').value) || 100;
       p.hasDeadline = document.getElementById('editHasDeadline').checked;
       p.deadlineDate = normalizeDateString(document.getElementById('editDeadlineDate').value) || null;
       p.dailyPenalty = getRawAmount(document.getElementById('editDailyPenalty'));
       saveState();
       renderDashboard();
-      alert('تنظیمات پروژه ذخیره شد.');
+      alert('تنظیمات پروژه بنایار با موفقیت ذخیره شد.');
     }
 
     function populateUnitSelect() {
